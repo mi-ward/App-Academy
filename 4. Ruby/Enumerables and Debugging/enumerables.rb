@@ -1,5 +1,5 @@
 class Array
-  def my_each(&proc)
+  def my_each(&block)
     count = 0
       while count < self.length
         proc.call(self[count])
@@ -7,5 +7,12 @@ class Array
         end
     return self
   end
-end
 
+  def my_select(&block)
+    new_arr = []
+    self.my_each do |el|
+      new_arr << el if block.call(el) == true
+    end
+    new_arr
+  end
+end
