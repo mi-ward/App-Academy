@@ -83,5 +83,5 @@ end
 
 
 
-game = Game.new("Jim", "Pam")
+game = Game.new("Player1", "Player2")
 game.run

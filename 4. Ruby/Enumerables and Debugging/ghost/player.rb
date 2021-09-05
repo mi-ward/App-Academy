@@ -13,7 +13,7 @@ class Player
   end
 
   def alert_invalid_guess
-    puts "Not a valid guess. Try again:"
+    puts "Not a valid guess. Try again: "
   end
 
 end
