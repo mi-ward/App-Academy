@@ -134,5 +134,5 @@ end
 
 
 
-game = Game.new("Michael", "Lauren","Ari")
+game = Game.new("Player1","Player2")
 game.run
