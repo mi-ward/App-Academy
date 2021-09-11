@@ -22,3 +22,7 @@ class AI_Player
       p dictionary
     end
 end
+
+#modulo for collecting all options that can be played and still win
+#ability to find and guess a letter
+#enter bug
