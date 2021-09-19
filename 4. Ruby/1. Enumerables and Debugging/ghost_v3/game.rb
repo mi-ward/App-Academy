@@ -1,12 +1,21 @@
 require_relative "./player.rb"
+require_relative "./ai_player.rb"
 
 # creates new Game class with multiplayer
 # creates a blank fragment
 # imports dictionary
 # creates losses counter
 class Game
-  def initialize(*players)
-    @players = players.map {|player| Player.new(player)}
+  def initialize(players)
+    @players = []
+    players.each do |player, type|
+      if type == "h" 
+        @players << Player.new(player)
+      elsif type == "c"
+        @players << AI_Player.new(player)
+      end
+    end
+
     @fragment = ""
     @dictionary = {}
     File.foreach("dictionary.txt") {|line| @dictionary[line.chomp.to_s] = 0}
@@ -46,20 +55,25 @@ class Game
   #if it is valid it adds the letter to the fragment, updates the turn, and changes to the next turn
   def take_turn(player)
     display_fragment
-    temp = @fragment + player.guess
-    puts
 
-    while !valid_play?(temp)
-        display_fragment
-        player.alert_invalid_guess
-        temp = @fragment + player.guess
-        puts
+    if player.class.name == "AI_Player"
+      temp = @fragment + player.ai_guess(@fragment, @players.length)
+    else
+      
+      temp = @fragment + player.guess
+      puts
+
+      while !valid_play?(temp)
+          display_fragment
+          player.alert_invalid_guess
+          temp = @fragment + player.guess
+          puts
+      end
     end
 
     @fragment = temp
     @turn += 1
     next_player!
-    
   end
 
   #runs through dictionary to see fragment is part of any word
@@ -131,5 +145,5 @@ class Game
   end
 end
 
-game = Game.new("Player1","Player2")
+game = Game.new("Lauren": "h","Computer": "c")
 game.run
